@@ -1,5 +1,6 @@
 package ck.my65131996.spendwise;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,13 +9,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import android.content.Intent;
+
 public class MainActivity extends AppCompatActivity {
 
-    EditText edtEmail, edtPassword;
-    Button btnLogin, btnRegister;
+    private EditText edtEmail, edtPassword;
+    private Button btnLogin, btnRegister;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,47 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // Đăng ký
+        // Chuyển sang màn hình đăng ký
         btnRegister.setOnClickListener(v -> {
-            Intent intent =
-                    new Intent(MainActivity.this,
-                            RegisterActivity.class);
-
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    RegisterActivity.class
+            );
             startActivity(intent);
         });
 
         // Đăng nhập
         btnLogin.setOnClickListener(v -> loginUser());
-    }
-
-    private void registerUser() {
-
-        String email = edtEmail.getText().toString().trim();
-        String password = edtPassword.getText().toString().trim();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this,
-                    "Vui lòng nhập Email và Mật khẩu",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-
-                    if (task.isSuccessful()) {
-
-                        Toast.makeText(this,
-                                "Đăng ký thành công",
-                                Toast.LENGTH_SHORT).show();
-
-                    } else {
-
-                        Toast.makeText(this,
-                                task.getException().getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 
     private void loginUser() {
@@ -78,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
         String password = edtPassword.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this,
+            Toast.makeText(
+                    this,
                     "Vui lòng nhập Email và Mật khẩu",
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
 
@@ -89,15 +62,27 @@ public class MainActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
 
-                        Toast.makeText(this,
+                        Toast.makeText(
+                                MainActivity.this,
                                 "Đăng nhập thành công",
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        Intent intent = new Intent(
+                                MainActivity.this,
+                                HomeActivity.class
+                        );
+
+                        startActivity(intent);
+                        finish();
 
                     } else {
 
-                        Toast.makeText(this,
+                        Toast.makeText(
+                                MainActivity.this,
                                 "Email hoặc mật khẩu không đúng",
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
     }
