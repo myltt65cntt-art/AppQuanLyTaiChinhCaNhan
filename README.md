@@ -1,3 +1,13 @@
-App quản lý tài chính cá nhân (SpendWise)
-Màn hình đăng ký
-<img width="200" height="400" alt="dangky" src="https://github.com/user-attachments/assets/2f379f05-fe00-40a0-92cc-178478749606" />
+# 💰 SpendWise
+
+Ứng dụng quản lý tài chính cá nhân trên Android giúp người dùng quản lý thu nhập, chi tiêu và theo dõi tình hình tài chính một cách hiệu quả.
+
+## 📱 Màn hình đăng ký
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2f379f05-fe00-40a0-92cc-178478749606" width="250"/>
+</p>
+
+<p align="center">
+  <i>Giao diện đăng ký tài khoản của ứng dụng SpendWise</i>
+</p>
