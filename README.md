@@ -1,4 +1,4 @@
-# 💰 SpendWise
+# SpendWise
 
 Ứng dụng quản lý tài chính cá nhân trên Android giúp người dùng quản lý thu nhập, chi tiêu và theo dõi tình hình tài chính một cách hiệu quả.
 
