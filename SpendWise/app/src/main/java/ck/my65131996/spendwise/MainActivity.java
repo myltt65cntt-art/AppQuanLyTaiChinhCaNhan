@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-
+import android.content.Intent;
 public class MainActivity extends AppCompatActivity {
 
     EditText edtEmail, edtPassword;
@@ -30,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Đăng ký
-        btnRegister.setOnClickListener(v -> registerUser());
+        btnRegister.setOnClickListener(v -> {
+            Intent intent =
+                    new Intent(MainActivity.this,
+                            RegisterActivity.class);
+
+            startActivity(intent);
+        });
 
         // Đăng nhập
         btnLogin.setOnClickListener(v -> loginUser());
