@@ -9,5 +9,5 @@
 </p>
 
 <p align="center">
-  <i>Giao diện đăng ký tài khoản của ứng dụng SpendWise</i>
+  <i>Giao diện đăng nhập vào ứng dụng SpendWise</i>
 </p>
