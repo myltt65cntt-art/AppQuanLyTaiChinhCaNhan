@@ -18,3 +18,16 @@
   <p align="center">
       <i>Giao diện đăng kí ứng dụng SpendWise</i>
   </p>
+  <p align="center">
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/89e4c897-dcd7-4fca-a04e-940da89bc56a" />
+  </p>
+    <p align="center">
+      <i>Giao diện chính ứng dụng SpendWise</i>
+  </p>
+  <p align="center">
+    <img width="250"  alt="image" src="https://github.com/user-attachments/assets/a6043b4d-9667-4c19-8ae2-ef3a826c79d7" />
+
+  </p>
+   <p align="center">
+      <i>Giao diện nhập chi tiêu ứng dụng SpendWise</i>
+  </p>
