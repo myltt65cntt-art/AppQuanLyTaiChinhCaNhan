@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="200dp"
-        android:layout_height="220dp"
+        android:layout_width="280dp"
+        android:layout_height="224dp"
         android:scaleType="fitCenter"
         android:src="@mipmap/logo" />
 
@@ -19,7 +19,7 @@
         android:layout_marginTop="16dp"
         android:text="Quản lý chi tiêu thông minh"
         android:textColor="#2E7D32"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 </LinearLayout>
