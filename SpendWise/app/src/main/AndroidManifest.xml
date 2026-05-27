@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpendWise">
         <activity
+            android:name=".AddTransactionActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterSuccessActivity"
             android:exported="false" />
         <activity
@@ -32,7 +35,6 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>
