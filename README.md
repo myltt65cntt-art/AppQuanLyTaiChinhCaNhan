@@ -31,3 +31,20 @@
    <p align="center">
       <i>Giao diện nhập chi tiêu ứng dụng SpendWise</i>
   </p>
+    <p align="center">
+    <img width="250"  alt="image" src="https://github.com/user-attachments/assets/d38db452-bd95-4889-a416-7bcdb9b0ad1b" />
+    <img width="250" alt="image" src="https://github.com/user-attachments/assets/0fed6c91-207c-41ff-b0ea-82b98f886f7d" />
+  </p>
+   <p align="center">
+      <i>Giao diện profile ứng dụng SpendWise</i>
+  </p>
+    <p align="center">
+   <img width="250" alt="image" src="https://github.com/user-attachments/assets/51c72dbe-d046-4364-a298-7eabd3eff3a4" />
+   <img width="250" alt="image" src="https://github.com/user-attachments/assets/a047c794-052f-418d-8c0e-a0b94aa48085" />
+
+
+
+  </p>
+   <p align="center">
+       <i>Giao diện profile ứng dụng SpendWise</i>
+  </p>
