@@ -1,12 +1,21 @@
 package ck.my65131996.spendwise;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -17,11 +26,15 @@ public class HomeActivity extends AppCompatActivity {
             txtExpense,
             txtIncome;
 
-    int balance = 5500000;
+    int balance = 0;
 
     int expense = 0;
 
     int income = 0;
+
+    FirebaseAuth mAuth;
+
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
-        // FIND VIEW
+        // VIEW
 
         btnAddTransaction =
                 findViewById(R.id.btnAddTransaction);
@@ -47,96 +60,163 @@ public class HomeActivity extends AppCompatActivity {
         txtIncome =
                 findViewById(R.id.txtIncome);
 
-        // BUTTON ADD TRANSACTION
+        // FIREBASE
+
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase database =
+                FirebaseDatabase.getInstance(
+                        "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/"
+                );
+
+        databaseReference =
+                database.getReference("transactions");
+
+        // BUTTON ADD
 
         btnAddTransaction.setOnClickListener(v -> {
 
             Intent intent =
-                    new Intent(HomeActivity.this,
-                            AddTransactionActivity.class);
+                    new Intent(
+                            HomeActivity.this,
+                            AddTransactionActivity.class
+                    );
 
-            startActivityForResult(intent, 1);
-
+            startActivity(intent);
         });
 
-        // UPDATE UI
+        // LOAD DATA
 
-        updateUI();
+        loadData();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    Intent data) {
+    private void loadData() {
 
-        super.onActivityResult(
-                requestCode,
-                resultCode,
-                data);
+        FirebaseUser user =
+                mAuth.getCurrentUser();
 
-        if (requestCode == 1 &&
-                resultCode == Activity.RESULT_OK) {
+        if (user == null) {
 
-            String category =
-                    data.getStringExtra(
-                            "category");
+            Toast.makeText(
+                    this,
+                    "Chưa đăng nhập",
+                    Toast.LENGTH_LONG
+            ).show();
 
-            String moneyString =
-                    data.getStringExtra(
-                            "money");
-
-            String note =
-                    data.getStringExtra(
-                            "note");
-
-            String date =
-                    data.getStringExtra(
-                            "date");
-
-            boolean isIncome =
-                    data.getBooleanExtra(
-                            "isIncome",
-                            false);
-
-            int money =
-                    Integer.parseInt(
-                            moneyString);
-
-            // THU NHẬP
-
-            if (isIncome) {
-
-                income += money;
-
-                balance += money;
-            }
-
-            // CHI TIÊU
-
-            else {
-
-                expense += money;
-
-                balance -= money;
-            }
-
-            // UPDATE UI
-
-            updateUI();
-
-            // RECENT TRANSACTION
-
-            txtRecent.setText(
-
-                    category + "\n\n" +
-
-                            money + " đ\n\n" +
-
-                            note + "\n\n📅 " +
-
-                            date
-            );
+            return;
         }
+
+        String uid = user.getUid();
+
+        databaseReference
+
+                .child(uid)
+
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(
+                            @NonNull DataSnapshot snapshot) {
+
+                        balance = 0;
+
+                        income = 0;
+
+                        expense = 0;
+
+                        String recentText = "";
+
+                        for (DataSnapshot data :
+                                snapshot.getChildren()) {
+
+                            String category =
+                                    String.valueOf(
+                                            data.child("category")
+                                                    .getValue()
+                                    );
+
+                            String moneyString =
+                                    String.valueOf(
+                                            data.child("money")
+                                                    .getValue()
+                                    );
+
+                            String note =
+                                    String.valueOf(
+                                            data.child("note")
+                                                    .getValue()
+                                    );
+
+                            String date =
+                                    String.valueOf(
+                                            data.child("date")
+                                                    .getValue()
+                                    );
+
+                            boolean isIncome =
+                                    Boolean.parseBoolean(
+                                            String.valueOf(
+                                                    data.child("isIncome")
+                                                            .getValue()
+                                            )
+                                    );
+
+                            int money = 0;
+
+                            try {
+
+                                money =
+                                        Integer.parseInt(
+                                                moneyString);
+
+                            } catch (Exception e) {
+
+                                e.printStackTrace();
+                            }
+
+                            // THU NHẬP
+
+                            if (isIncome) {
+
+                                income += money;
+
+                                balance += money;
+                            }
+
+                            // CHI TIÊU
+
+                            else {
+
+                                expense += money;
+
+                                balance -= money;
+                            }
+
+                            // RECENT
+
+                            recentText =
+                                    category + "\n\n" +
+                                            money + " đ\n\n" +
+                                            note + "\n\n📅 " +
+                                            date;
+                        }
+
+                        txtRecent.setText(recentText);
+
+                        updateUI();
+                    }
+
+                    @Override
+                    public void onCancelled(
+                            @NonNull DatabaseError error) {
+
+                        Toast.makeText(
+                                HomeActivity.this,
+                                error.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                });
     }
 
     private void updateUI() {
