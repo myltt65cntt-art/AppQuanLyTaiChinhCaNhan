@@ -1,43 +1,34 @@
 package ck.my65131996.spendwise;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class ProfileActivity
         extends AppCompatActivity {
 
     TextView txtName,
             txtEmail,
-            txtIncome,
-            txtExpense,
-            txtTransaction;
+            txtAddress;
 
     Button btnEdit,
             btnLogout;
 
-    ImageView imgAvatar;
+    ImageView imgAvatar,
+            imgCover;
 
     FirebaseAuth mAuth;
 
     DatabaseReference userRef;
-
-    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +45,12 @@ public class ProfileActivity
 
         userRef =
                 FirebaseDatabase
-                        .getInstance()
-                        .getReference("users");
 
-        storageReference =
-                FirebaseStorage
-                        .getInstance()
-                        .getReference("avatars");
+                        .getInstance(
+                                "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/"
+                        )
+
+                        .getReference("users");
 
         // VIEW
 
@@ -70,14 +60,8 @@ public class ProfileActivity
         txtEmail =
                 findViewById(R.id.txtEmail);
 
-        txtIncome =
-                findViewById(R.id.txtIncome);
-
-        txtExpense =
-                findViewById(R.id.txtExpense);
-
-        txtTransaction =
-                findViewById(R.id.txtTransaction);
+        txtAddress =
+                findViewById(R.id.txtAddress);
 
         btnEdit =
                 findViewById(R.id.btnEdit);
@@ -85,7 +69,11 @@ public class ProfileActivity
         btnLogout =
                 findViewById(R.id.btnLogout);
 
-        imgAvatar = findViewById(R.id.imgAvatar);
+        imgAvatar =
+                findViewById(R.id.imgAvatar);
+
+        imgCover =
+                findViewById(R.id.imgCover);
 
         // USER DATA
 
@@ -95,13 +83,15 @@ public class ProfileActivity
                     mAuth.getCurrentUser()
                             .getUid();
 
+            // EMAIL AUTH
+
             txtEmail.setText(
 
                     mAuth.getCurrentUser()
                             .getEmail()
             );
 
-            // LOAD USER INFO
+            // LOAD DATABASE
 
             userRef.child(uid)
 
@@ -115,20 +105,16 @@ public class ProfileActivity
                                     snapshot.child("name")
                                             .getValue(String.class);
 
+                            String address =
+                                    snapshot.child("address")
+                                            .getValue(String.class);
+
                             String avatar =
                                     snapshot.child("avatar")
                                             .getValue(String.class);
 
-                            String income =
-                                    snapshot.child("income")
-                                            .getValue(String.class);
-
-                            String expense =
-                                    snapshot.child("expense")
-                                            .getValue(String.class);
-
-                            String transaction =
-                                    snapshot.child("transaction")
+                            String cover =
+                                    snapshot.child("cover")
                                             .getValue(String.class);
 
                             // NAME
@@ -140,40 +126,20 @@ public class ProfileActivity
                             } else {
 
                                 txtName.setText(
-                                        "SpendWise User 🌸");
+                                        "SpendWise User");
                             }
 
-                            // INCOME
+                            // ADDRESS
 
-                            if (income != null) {
+                            if (address != null) {
 
-                                txtIncome.setText(income);
+                                txtAddress.setText(
+                                        "📍 " + address);
 
                             } else {
 
-                                txtIncome.setText("+0đ");
-                            }
-
-                            // EXPENSE
-
-                            if (expense != null) {
-
-                                txtExpense.setText(expense);
-
-                            } else {
-
-                                txtExpense.setText("-0đ");
-                            }
-
-                            // TRANSACTION
-
-                            if (transaction != null) {
-
-                                txtTransaction.setText(transaction);
-
-                            } else {
-
-                                txtTransaction.setText("0");
+                                txtAddress.setText(
+                                        "📍 Chưa cập nhật");
                             }
 
                             // AVATAR
@@ -186,24 +152,22 @@ public class ProfileActivity
 
                                         .into(imgAvatar);
                             }
+
+                            // COVER
+
+                            if (cover != null) {
+
+                                Glide.with(this)
+
+                                        .load(cover)
+
+                                        .into(imgCover);
+                            }
                         }
                     });
         }
 
-        // CLICK AVATAR
-
-        imgAvatar.setOnClickListener(v -> {
-
-            Intent intent =
-                    new Intent(Intent.ACTION_PICK);
-
-            intent.setType("image/*");
-
-            startActivityForResult(intent, 100);
-
-        });
-
-        // EDIT
+        // EDIT PROFILE
 
         btnEdit.setOnClickListener(v -> {
 
@@ -234,83 +198,72 @@ public class ProfileActivity
         });
     }
 
-    // UPLOAD AVATAR
+    // LOAD LẠI KHI QUAY VỀ
 
     @Override
-    protected void onActivityResult(
-            int requestCode,
-            int resultCode,
-            @Nullable Intent data) {
+    protected void onResume() {
 
-        super.onActivityResult(
-                requestCode,
-                resultCode,
-                data);
+        super.onResume();
 
-        if (requestCode == 100
-                && resultCode == RESULT_OK
-                && data != null) {
-
-            Uri imageUri =
-                    data.getData();
+        if (mAuth.getCurrentUser() != null) {
 
             String uid =
                     mAuth.getCurrentUser()
                             .getUid();
 
-            storageReference
+            userRef.child(uid)
 
-                    .child(uid + ".jpg")
+                    .get()
 
-                    .putFile(imageUri)
+                    .addOnSuccessListener(snapshot -> {
 
-                    .addOnSuccessListener(taskSnapshot -> {
+                        if (snapshot.exists()) {
 
-                        storageReference
+                            String name =
+                                    snapshot.child("name")
+                                            .getValue(String.class);
 
-                                .child(uid + ".jpg")
+                            String address =
+                                    snapshot.child("address")
+                                            .getValue(String.class);
 
-                                .getDownloadUrl()
+                            String avatar =
+                                    snapshot.child("avatar")
+                                            .getValue(String.class);
 
-                                .addOnSuccessListener(uri -> {
+                            String cover =
+                                    snapshot.child("cover")
+                                            .getValue(String.class);
 
-                                    String imageLink =
-                                            uri.toString();
+                            if (name != null) {
 
-                                    // SAVE LINK DATABASE
+                                txtName.setText(name);
+                            }
 
-                                    userRef.child(uid)
+                            if (address != null) {
 
-                                            .child("avatar")
+                                txtAddress.setText(
+                                        "📍 " + address);
+                            }
 
-                                            .setValue(imageLink);
+                            if (avatar != null) {
 
-                                    // SHOW IMAGE
+                                Glide.with(this)
 
-                                    Glide.with(this)
+                                        .load(avatar)
 
-                                            .load(imageLink)
+                                        .into(imgAvatar);
+                            }
 
-                                            .into(imgAvatar);
+                            if (cover != null) {
 
-                                    Toast.makeText(
-                                            this,
-                                            "Đổi avatar thành công 🌸",
-                                            Toast.LENGTH_SHORT
-                                    ).show();
+                                Glide.with(this)
 
-                                });
+                                        .load(cover)
 
-                    })
-
-                    .addOnFailureListener(e -> {
-
-                        Toast.makeText(
-                                this,
-                                "Upload thất bại",
-                                Toast.LENGTH_SHORT
-                        ).show();
-
+                                        .into(imgCover);
+                            }
+                        }
                     });
         }
     }

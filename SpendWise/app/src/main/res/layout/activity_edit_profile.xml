@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- COVER -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp">
+
+            <ImageView
+                android:id="@+id/imgCover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background"/>
+
+            <!-- CAMERA COVER -->
+
+            <ImageView
+                android:id="@+id/btnChangeCover"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:background="@drawable/profile_circle"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_camera"/>
+
+        </FrameLayout>
+
+        <!-- CARD -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-70dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/profile_card"
+            android:elevation="6dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- AVATAR -->
+
+            <FrameLayout
+                android:layout_width="140dp"
+                android:layout_height="140dp">
+
+                <ImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:background="@drawable/profile_circle"
+                    android:padding="4dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher_round"/>
+
+                <!-- CAMERA AVATAR -->
+
+                <ImageView
+                    android:id="@+id/btnChangeAvatar"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/profile_circle"
+                    android:padding="8dp"
+                    android:src="@android:drawable/ic_menu_camera"/>
+
+            </FrameLayout>
+
+            <!-- NAME -->
+
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/profile_card"
+                android:hint="Tên"
+                android:padding="15dp"
+                android:textSize="17sp"/>
+
+            <!-- EMAIL -->
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/profile_card"
+                android:hint="Email"
+                android:padding="15dp"
+                android:textSize="17sp"/>
+
+            <!-- ADDRESS -->
+
+            <EditText
+                android:id="@+id/edtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/profile_card"
+                android:hint="Địa chỉ"
+                android:padding="15dp"
+                android:textSize="17sp"/>
+
+            <!-- SAVE -->
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#6C4AB6"
+                android:text="Lưu thay đổi"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

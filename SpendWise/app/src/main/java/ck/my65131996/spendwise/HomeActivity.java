@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,7 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity
+        extends AppCompatActivity {
 
     Button btnAddTransaction;
 
@@ -35,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
 
     DatabaseReference databaseReference;
+
+    BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +64,13 @@ public class HomeActivity extends AppCompatActivity {
         txtIncome =
                 findViewById(R.id.txtIncome);
 
+        bottomNavigation =
+                findViewById(R.id.bottomNavigation);
+
         // FIREBASE
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth =
+                FirebaseAuth.getInstance();
 
         FirebaseDatabase database =
                 FirebaseDatabase.getInstance(
@@ -83,6 +91,56 @@ public class HomeActivity extends AppCompatActivity {
                     );
 
             startActivity(intent);
+        });
+
+        // MENU DƯỚI
+
+        bottomNavigation.setSelectedItemId(
+                R.id.navigation_home);
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            // HOME
+
+            if(item.getItemId()
+                    == R.id.navigation_home){
+
+                return true;
+            }
+
+            // CHỨC NĂNG
+
+            else if(item.getItemId()
+                    == R.id.navigation_feature){
+
+                startActivity(
+
+                        new Intent(
+                                HomeActivity.this,
+                                AddTransactionActivity.class
+                        )
+                );
+
+                return true;
+            }
+
+            // PROFILE
+
+            else if(item.getItemId()
+                    == R.id.navigation_profile){
+
+                startActivity(
+
+                        new Intent(
+                                HomeActivity.this,
+                                ProfileActivity.class
+                        )
+                );
+
+                return true;
+            }
+
+            return false;
         });
 
         // LOAD DATA
@@ -106,117 +164,121 @@ public class HomeActivity extends AppCompatActivity {
             return;
         }
 
-        String uid = user.getUid();
+        String uid =
+                user.getUid();
 
         databaseReference
 
                 .child(uid)
 
-                .addValueEventListener(new ValueEventListener() {
+                .addValueEventListener(
+                        new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(
-                            @NonNull DataSnapshot snapshot) {
+                            @Override
+                            public void onDataChange(
+                                    @NonNull DataSnapshot snapshot) {
 
-                        balance = 0;
+                                balance = 0;
 
-                        income = 0;
+                                income = 0;
 
-                        expense = 0;
+                                expense = 0;
 
-                        String recentText = "";
+                                String recentText =
+                                        "Chưa có giao dịch";
 
-                        for (DataSnapshot data :
-                                snapshot.getChildren()) {
+                                for (DataSnapshot data :
+                                        snapshot.getChildren()) {
 
-                            String category =
-                                    String.valueOf(
-                                            data.child("category")
-                                                    .getValue()
-                                    );
-
-                            String moneyString =
-                                    String.valueOf(
-                                            data.child("money")
-                                                    .getValue()
-                                    );
-
-                            String note =
-                                    String.valueOf(
-                                            data.child("note")
-                                                    .getValue()
-                                    );
-
-                            String date =
-                                    String.valueOf(
-                                            data.child("date")
-                                                    .getValue()
-                                    );
-
-                            boolean isIncome =
-                                    Boolean.parseBoolean(
+                                    String category =
                                             String.valueOf(
-                                                    data.child("isIncome")
+                                                    data.child("category")
                                                             .getValue()
-                                            )
-                                    );
+                                            );
 
-                            int money = 0;
+                                    String moneyString =
+                                            String.valueOf(
+                                                    data.child("money")
+                                                            .getValue()
+                                            );
 
-                            try {
+                                    String note =
+                                            String.valueOf(
+                                                    data.child("note")
+                                                            .getValue()
+                                            );
 
-                                money =
-                                        Integer.parseInt(
-                                                moneyString);
+                                    String date =
+                                            String.valueOf(
+                                                    data.child("date")
+                                                            .getValue()
+                                            );
 
-                            } catch (Exception e) {
+                                    boolean isIncome =
+                                            Boolean.parseBoolean(
+                                                    String.valueOf(
+                                                            data.child("isIncome")
+                                                                    .getValue()
+                                                    )
+                                            );
 
-                                e.printStackTrace();
+                                    int money = 0;
+
+                                    try {
+
+                                        money =
+                                                Integer.parseInt(
+                                                        moneyString);
+
+                                    } catch (Exception e) {
+
+                                        e.printStackTrace();
+                                    }
+
+                                    // THU NHẬP
+
+                                    if (isIncome) {
+
+                                        income += money;
+
+                                        balance += money;
+                                    }
+
+                                    // CHI TIÊU
+
+                                    else {
+
+                                        expense += money;
+
+                                        balance -= money;
+                                    }
+
+                                    // RECENT
+
+                                    recentText =
+                                            category + "\n\n" +
+                                                    money + " đ\n\n" +
+                                                    note + "\n\n📅 " +
+                                                    date;
+                                }
+
+                                txtRecent.setText(
+                                        recentText);
+
+                                updateUI();
                             }
 
-                            // THU NHẬP
+                            @Override
+                            public void onCancelled(
+                                    @NonNull DatabaseError error) {
 
-                            if (isIncome) {
-
-                                income += money;
-
-                                balance += money;
+                                Toast.makeText(
+                                        HomeActivity.this,
+                                        error.getMessage(),
+                                        Toast.LENGTH_LONG
+                                ).show();
                             }
-
-                            // CHI TIÊU
-
-                            else {
-
-                                expense += money;
-
-                                balance -= money;
-                            }
-
-                            // RECENT
-
-                            recentText =
-                                    category + "\n\n" +
-                                            money + " đ\n\n" +
-                                            note + "\n\n📅 " +
-                                            date;
-                        }
-
-                        txtRecent.setText(recentText);
-
-                        updateUI();
-                    }
-
-                    @Override
-                    public void onCancelled(
-                            @NonNull DatabaseError error) {
-
-                        Toast.makeText(
-                                HomeActivity.this,
-                                error.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                });
+                        });
     }
 
     private void updateUI() {
