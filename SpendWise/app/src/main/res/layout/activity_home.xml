@@ -210,12 +210,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/card_small"
-                android:elevation="3dp"
                 android:padding="18dp"
                 android:text="Chưa có giao dịch"
-                android:textColor="#444444"
-                android:textSize="17sp" />
-
+                android:textSize="16sp"/>
         </LinearLayout>
 
     </ScrollView>

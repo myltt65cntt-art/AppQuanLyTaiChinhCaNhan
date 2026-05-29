@@ -184,8 +184,8 @@ public class HomeActivity
 
                                 expense = 0;
 
-                                String recentText =
-                                        "Chưa có giao dịch";
+                                StringBuilder recentText =
+                                        new StringBuilder();
 
                                 for (DataSnapshot data :
                                         snapshot.getChildren()) {
@@ -255,11 +255,23 @@ public class HomeActivity
 
                                     // RECENT
 
-                                    recentText =
-                                            category + "\n\n" +
-                                                    money + " đ\n\n" +
-                                                    note + "\n\n📅 " +
-                                                    date;
+                                    recentText.append("📂 ")
+                                            .append(category)
+                                            .append("\n");
+
+                                    recentText.append("💰 ")
+                                            .append(money)
+                                            .append(" đ\n");
+
+                                    recentText.append("📝 ")
+                                            .append(note)
+                                            .append("\n");
+
+                                    recentText.append("📅 ")
+                                            .append(date)
+                                            .append("\n");
+
+                                    recentText.append("------------------\n");
                                 }
 
                                 txtRecent.setText(
