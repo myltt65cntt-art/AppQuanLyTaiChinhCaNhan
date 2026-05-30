@@ -19,7 +19,8 @@
       <i>Giao diện đăng kí ứng dụng SpendWise</i>
   </p>
   <p align="center">
-<img width="250" alt="image" src="https://github.com/user-attachments/assets/89e4c897-dcd7-4fca-a04e-940da89bc56a" />
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/426dd199-f00d-4664-8928-2369a37e2e32" />
+
   </p>
     <p align="center">
       <i>Giao diện chính ứng dụng SpendWise</i>
