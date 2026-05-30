@@ -48,3 +48,12 @@
    <p align="center">
        <i>Giao diện profile ứng dụng SpendWise</i>
   </p>
+  </p>
+    <p align="center">
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/572fd239-17c0-4a5a-9a7b-20de094d1282" />
+      <img width="250" alt="image" src="https://github.com/user-attachments/assets/6f3bb62e-e307-4866-9219-228dc4d4c3e4" />
+
+ </p>
+   <p align="center">
+       <i>Giao diện nhập liệu</i>
+  </p>
