@@ -1,14 +1,12 @@
 package ck.my65131996.spendwise;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,14 +15,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.util.ArrayList;
 
 public class HomeActivity
         extends AppCompatActivity {
 
     Button btnAddTransaction;
+    RecyclerView recyclerTransaction;
 
-    TextView txtRecent,
-            txtBalance,
+    ArrayList<TransactionModel> transactionList;
+
+    TransactionAdapter adapter;
+    TextView txtBalance,
             txtExpense,
             txtIncome;
 
@@ -52,8 +56,21 @@ public class HomeActivity
         btnAddTransaction =
                 findViewById(R.id.btnAddTransaction);
 
-        txtRecent =
-                findViewById(R.id.txtRecent);
+        recyclerTransaction =
+                findViewById(R.id.recyclerTransaction);
+
+        transactionList =
+                new ArrayList<>();
+
+        adapter =
+                new TransactionAdapter(
+                        this,
+                        transactionList);
+
+        recyclerTransaction.setLayoutManager(
+                new LinearLayoutManager(this));
+
+        recyclerTransaction.setAdapter(adapter);
 
         txtBalance =
                 findViewById(R.id.txtBalance);
@@ -102,16 +119,16 @@ public class HomeActivity
 
             // HOME
 
-            if(item.getItemId()
-                    == R.id.navigation_home){
+            if (item.getItemId()
+                    == R.id.navigation_home) {
 
                 return true;
             }
 
             // CHỨC NĂNG
 
-            else if(item.getItemId()
-                    == R.id.navigation_feature){
+            else if (item.getItemId()
+                    == R.id.navigation_feature) {
 
                 startActivity(
 
@@ -126,8 +143,8 @@ public class HomeActivity
 
             // PROFILE
 
-            else if(item.getItemId()
-                    == R.id.navigation_profile){
+            else if (item.getItemId()
+                    == R.id.navigation_profile) {
 
                 startActivity(
 
@@ -179,103 +196,58 @@ public class HomeActivity
                                     @NonNull DataSnapshot snapshot) {
 
                                 balance = 0;
-
                                 income = 0;
-
                                 expense = 0;
 
-                                StringBuilder recentText =
-                                        new StringBuilder();
+                                transactionList.clear();
 
-                                for (DataSnapshot data :
-                                        snapshot.getChildren()) {
+                                for (DataSnapshot data : snapshot.getChildren()) {
 
-                                    String category =
-                                            String.valueOf(
-                                                    data.child("category")
-                                                            .getValue()
-                                            );
+                                    TransactionModel model =
+                                            data.getValue(
+                                                    TransactionModel.class);
 
-                                    String moneyString =
-                                            String.valueOf(
-                                                    data.child("money")
-                                                            .getValue()
-                                            );
+                                    if (model == null) {
+                                        continue;
+                                    }
 
-                                    String note =
-                                            String.valueOf(
-                                                    data.child("note")
-                                                            .getValue()
-                                            );
-
-                                    String date =
-                                            String.valueOf(
-                                                    data.child("date")
-                                                            .getValue()
-                                            );
-
-                                    boolean isIncome =
-                                            Boolean.parseBoolean(
-                                                    String.valueOf(
-                                                            data.child("isIncome")
-                                                                    .getValue()
-                                                    )
-                                            );
+                                    transactionList.add(model);
 
                                     int money = 0;
 
                                     try {
 
-                                        money =
-                                                Integer.parseInt(
-                                                        moneyString);
+                                        money = Integer.parseInt(
+                                                model.getMoney());
 
                                     } catch (Exception e) {
 
                                         e.printStackTrace();
                                     }
+                                    // ĐỌC TRỰC TIẾP TỪ FIREBASE
+                                    Boolean incomeValue =
+                                            data.child("isIncome")
+                                                    .getValue(Boolean.class);
+                                    boolean isIncome =
+                                            incomeValue != null
+                                                    && incomeValue;
 
-                                    // THU NHẬP
-
+                                    model.setIncome(isIncome);
                                     if (isIncome) {
 
                                         income += money;
 
                                         balance += money;
-                                    }
 
-                                    // CHI TIÊU
-
-                                    else {
+                                    } else {
 
                                         expense += money;
 
                                         balance -= money;
                                     }
-
-                                    // RECENT
-
-                                    recentText.append("📂 ")
-                                            .append(category)
-                                            .append("\n");
-
-                                    recentText.append("💰 ")
-                                            .append(money)
-                                            .append(" đ\n");
-
-                                    recentText.append("📝 ")
-                                            .append(note)
-                                            .append("\n");
-
-                                    recentText.append("📅 ")
-                                            .append(date)
-                                            .append("\n");
-
-                                    recentText.append("------------------\n");
                                 }
 
-                                txtRecent.setText(
-                                        recentText);
+                                adapter.notifyDataSetChanged();
 
                                 updateUI();
                             }
@@ -296,12 +268,12 @@ public class HomeActivity
     private void updateUI() {
 
         txtBalance.setText(
-                balance + " đ");
-
-        txtExpense.setText(
-                "-" + expense + " đ");
+                String.format("%,d đ", balance));
 
         txtIncome.setText(
-                "+" + income + " đ");
+                "+" + String.format("%,d", income) + " đ");
+
+        txtExpense.setText(
+                "-" + String.format("%,d", expense) + " đ");
     }
 }

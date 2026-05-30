@@ -15,7 +15,8 @@
         android:theme="@style/Theme.SpendWise">
         <activity
             android:name=".TransactionAdapter"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.SpendWise" />
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />

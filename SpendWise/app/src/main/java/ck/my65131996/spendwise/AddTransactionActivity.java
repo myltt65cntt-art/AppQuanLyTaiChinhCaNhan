@@ -30,11 +30,23 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     LinearLayout layoutFood,
             layoutShopping,
+            layoutTransport,
+            layoutEntertainment,
             layoutOther,
             layoutDate;
 
     TextView txtDate;
 
+    TextView txtFood;
+    TextView txtShopping;
+    TextView txtTransport;
+    TextView txtEntertainment;
+    TextView txtOther;
+    TextView txtFoodIcon;
+    TextView txtShoppingIcon;
+    TextView txtTransportIcon;
+    TextView txtEntertainmentIcon;
+    TextView txtOtherIcon;
     String selectedCategory = "";
     String selectedDate = "";
 
@@ -82,7 +94,40 @@ public class AddTransactionActivity extends AppCompatActivity {
         layoutShopping = findViewById(R.id.layoutShopping);
 
         layoutOther = findViewById(R.id.layoutOther);
+        layoutTransport =
+                findViewById(R.id.layoutTransport);
 
+        layoutEntertainment =
+                findViewById(R.id.layoutEntertainment);
+
+        txtFood =
+                findViewById(R.id.txtFood);
+
+        txtShopping =
+                findViewById(R.id.txtShopping);
+
+        txtTransport =
+                findViewById(R.id.txtTransport);
+
+        txtEntertainment =
+                findViewById(R.id.txtEntertainment);
+
+        txtOther =
+                findViewById(R.id.txtOther);
+        txtFoodIcon =
+                findViewById(R.id.txtFoodIcon);
+
+        txtShoppingIcon =
+                findViewById(R.id.txtShoppingIcon);
+
+        txtTransportIcon =
+                findViewById(R.id.txtTransportIcon);
+
+        txtEntertainmentIcon =
+                findViewById(R.id.txtEntertainmentIcon);
+
+        txtOtherIcon =
+                findViewById(R.id.txtOtherIcon);
         // DEFAULT
 
         btnExpense.setAlpha(1f);
@@ -102,6 +147,21 @@ public class AddTransactionActivity extends AppCompatActivity {
             btnIncome.setAlpha(0.5f);
 
             btnSave.setText("Lưu chi tiêu");
+
+            txtFood.setText("🍜 Ăn uống");
+
+            txtShopping.setText("🛍️ Mua sắm");
+
+            txtTransport.setText("🚕 Đi lại");
+
+            txtEntertainment.setText("🎮 Giải trí");
+
+            txtOther.setText("✨ Khác");
+            txtFoodIcon.setText("🍜");
+            txtShoppingIcon.setText("🛍️");
+            txtTransportIcon.setText("🚕");
+            txtEntertainmentIcon.setText("🎮");
+            txtOtherIcon.setText("✨");
         });
 
         // BUTTON THU NHẬP
@@ -111,56 +171,70 @@ public class AddTransactionActivity extends AppCompatActivity {
             isIncome = true;
 
             btnIncome.setAlpha(1f);
-
             btnExpense.setAlpha(0.5f);
 
             btnSave.setText("Lưu thu nhập");
-        });
 
+            txtFood.setText("Lương");
+            txtShopping.setText("Thưởng");
+            txtTransport.setText("Kinh doanh");
+            txtEntertainment.setText("Làm thêm");
+            txtOther.setText("Khác");
+
+            txtFoodIcon.setText("💼");
+            txtShoppingIcon.setText("🏅");
+            txtTransportIcon.setText("📈");
+            txtEntertainmentIcon.setText("💵");
+            txtOtherIcon.setText("✨");
+        });
         // CATEGORY
 
         layoutFood.setOnClickListener(v -> {
 
-            if (isIncome) {
-
-                selectedCategory = "📈 Kinh doanh";
-
-            } else {
-
-                selectedCategory = "🍜 Ăn uống";
-            }
+            selectedCategory =
+                    isIncome ?
+                            "💼 Lương" :
+                            "🍜 Ăn uống";
 
             selectCategory(layoutFood);
         });
 
         layoutShopping.setOnClickListener(v -> {
 
-            if (isIncome) {
-
-                selectedCategory = "💼 Lương";
-
-            } else {
-
-                selectedCategory = "🛍️ Mua sắm";
-            }
+            selectedCategory =
+                    isIncome ?
+                            "🏅 Thưởng" :
+                            "🛍️ Mua sắm";
 
             selectCategory(layoutShopping);
         });
 
+        layoutTransport.setOnClickListener(v -> {
+
+            selectedCategory =
+                    isIncome ?
+                            "📈 Kinh doanh" :
+                            "🚕 Đi lại";
+
+            selectCategory(layoutTransport);
+        });
+
+        layoutEntertainment.setOnClickListener(v -> {
+
+            selectedCategory =
+                    isIncome ?
+                            "💵 Làm thêm" :
+                            "🎮 Giải trí";
+
+            selectCategory(layoutEntertainment);
+        });
+
         layoutOther.setOnClickListener(v -> {
 
-            if (isIncome) {
-
-                selectedCategory = "🏅 Thưởng";
-
-            } else {
-
-                selectedCategory = "✨ Khác";
-            }
+            selectedCategory = "✨ Khác";
 
             selectCategory(layoutOther);
         });
-
         // CHỌN NGÀY
 
         layoutDate.setOnClickListener(v -> {
@@ -205,11 +279,16 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     // SELECT CATEGORY
 
-    private void selectCategory(LinearLayout selectedLayout) {
+    private void selectCategory(
+            LinearLayout selectedLayout) {
 
         layoutFood.setBackgroundColor(Color.WHITE);
 
         layoutShopping.setBackgroundColor(Color.WHITE);
+
+        layoutTransport.setBackgroundColor(Color.WHITE);
+
+        layoutEntertainment.setBackgroundColor(Color.WHITE);
 
         layoutOther.setBackgroundColor(Color.WHITE);
 

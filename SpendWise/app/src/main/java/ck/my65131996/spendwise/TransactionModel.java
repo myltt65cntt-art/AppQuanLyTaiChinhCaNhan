@@ -2,18 +2,31 @@ package ck.my65131996.spendwise;
 
 public class TransactionModel {
 
-    String transactionId;
-    String money;
-    String note;
-    String category;
-    String date;
+    private String id;
+    private String transactionId;
+    private String money;
+    private String note;
+    private String category;
+    private String date;
 
-    boolean isIncome;
+    private boolean isIncome;
 
-    long timestamp;
+    private long timestamp;
 
     public TransactionModel() {
     }
+
+    // ID FIREBASE
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    // TRANSACTION ID
 
     public String getTransactionId() {
         return transactionId;
@@ -23,6 +36,8 @@ public class TransactionModel {
         this.transactionId = transactionId;
     }
 
+    // MONEY
+
     public String getMoney() {
         return money;
     }
@@ -30,6 +45,8 @@ public class TransactionModel {
     public void setMoney(String money) {
         this.money = money;
     }
+
+    // NOTE
 
     public String getNote() {
         return note;
@@ -39,6 +56,8 @@ public class TransactionModel {
         this.note = note;
     }
 
+    // CATEGORY
+
     public String getCategory() {
         return category;
     }
@@ -46,6 +65,8 @@ public class TransactionModel {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    // DATE
 
     public String getDate() {
         return date;
@@ -55,13 +76,17 @@ public class TransactionModel {
         this.date = date;
     }
 
+    // INCOME
+
     public boolean isIncome() {
         return isIncome;
     }
 
     public void setIncome(boolean income) {
-        isIncome = income;
+        this.isIncome = income;
     }
+
+    // TIMESTAMP
 
     public long getTimestamp() {
         return timestamp;
