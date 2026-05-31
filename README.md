@@ -22,39 +22,12 @@ Sau khi nhận được UID, ứng dụng sử dụng UID này để truy xuất
 💵 Danh sách giao dịch thu nhập
 🛒 Danh sách giao dịch chi tiêu
 🖼️ Ảnh đại diện (Avatar) và ảnh bìa (Cover)
-
 Dữ liệu được tải về và hiển thị trên màn hình Trang chủ, cho phép người dùng theo dõi:
-
 Tổng thu nhập
 Tổng chi tiêu
 Số dư hiện tại
 Lịch sử giao dịch
-
 Việc sử dụng Firebase Authentication giúp tăng tính bảo mật, hỗ trợ quản lý nhiều người dùng và đảm bảo mỗi tài khoản chỉ có thể truy cập dữ liệu thuộc về chính mình.
-
-🔄 Luồng hoạt động
-Người dùng
-      │
-      ▼
-Ứng dụng Android
-      │
-      ▼
-Firebase Authentication
-      │
-      ▼
-Xác thực tài khoản
-      │
-      ▼
-Nhận UID
-      │
-      ▼
-Firebase Realtime Database
-      │
-      ▼
-Tải dữ liệu người dùng
-      │
-      ▼
-Màn hình Trang chủ
 
 <p align="center">
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/846fe0bc-95b1-4a98-bd69-e62188b9c427" />
