@@ -8,21 +8,35 @@
   <img src="https://github.com/user-attachments/assets/2f379f05-fe00-40a0-92cc-178478749606" width="250"/>
   <img width="250" alt="image" src="https://github.com/user-attachments/assets/3cdfd598-8436-4ca9-8150-42b8496237bf" />
 </p>
-<p align="">
-  <i>## Chức năng Đăng nhập
+## Chức năng Đăng nhập
 Ứng dụng SpendWise sử dụng **Firebase Authentication** để xác thực người dùng thông qua Email và Mật khẩu.
 Khi người dùng nhập thông tin đăng nhập và nhấn nút **Đăng nhập**, ứng dụng sẽ gửi Email và Mật khẩu đến Firebase Authentication để kiểm tra tính hợp lệ của tài khoản. Nếu thông tin chính xác, Firebase sẽ xác thực thành công và trả về một **UID (User ID)** duy nhất cho người dùng.
 Sau khi nhận được UID, ứng dụng sử dụng UID này để truy xuất dữ liệu cá nhân từ **Firebase Realtime Database**, bao gồm:
 * Thông tin hồ sơ cá nhân.
 * Danh sách giao dịch thu nhập.
 * Danh sách giao dịch chi tiêu.
-* Ảnh đại diện và ảnh bìa.
+* Ảnh đại diện (Avatar) và ảnh bìa (Cover).
 Dữ liệu được tải về và hiển thị trên màn hình Trang chủ, cho phép người dùng theo dõi tổng thu nhập, tổng chi tiêu, số dư hiện tại và lịch sử giao dịch của mình.
 Việc sử dụng Firebase Authentication giúp tăng tính bảo mật, hỗ trợ quản lý nhiều người dùng và đảm bảo mỗi tài khoản chỉ có thể truy cập dữ liệu thuộc về chính mình.
 ### Luồng hoạt động
-Người dùng → Ứng dụng Android → Firebase Authentication → Xác thực tài khoản → Nhận UID → Firebase Realtime Database → Tải dữ liệu người dùng → Màn hình Trang chủ
-</i>
-</p>
+```text
+Người dùng
+    ↓
+Ứng dụng Android
+    ↓
+Firebase Authentication
+    ↓
+Xác thực tài khoản
+    ↓
+Nhận UID
+    ↓
+Firebase Realtime Database
+    ↓
+Tải dữ liệu người dùng
+    ↓
+Màn hình Trang chủ
+```
+
 <p align="center">
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/846fe0bc-95b1-4a98-bd69-e62188b9c427" />
   <img width="250"  alt="image" src="https://github.com/user-attachments/assets/2e036df2-d1eb-43e3-8e99-b68127fb48d8" />
