@@ -27,7 +27,8 @@ public class AddTransactionActivity extends AppCompatActivity {
     EditText edtMoney, edtNote;
 
     Button btnSave, btnExpense, btnIncome;
-
+    String transactionId;
+    boolean isEdit = false;
     LinearLayout layoutFood,
             layoutShopping,
             layoutTransport,
@@ -129,7 +130,18 @@ public class AddTransactionActivity extends AppCompatActivity {
         txtOtherIcon =
                 findViewById(R.id.txtOtherIcon);
         // DEFAULT
+        transactionId =
+                getIntent().getStringExtra(
+                        "transactionId");
 
+        if(transactionId != null){
+
+            isEdit = true;
+
+            btnSave.setText("Cập nhật");
+
+            loadTransaction();
+        }
         btnExpense.setAlpha(1f);
 
         btnIncome.setAlpha(0.5f);
@@ -278,7 +290,47 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     // SELECT CATEGORY
+    private void loadTransaction() {
 
+        FirebaseDatabase
+                .getInstance(
+                        "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/"
+                )
+                .getReference("transactions")
+                .child(
+                        FirebaseAuth
+                                .getInstance()
+                                .getUid())
+                .child(transactionId)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+
+                    TransactionModel model =
+                            snapshot.getValue(
+                                    TransactionModel.class);
+
+                    if(model == null) return;
+
+                    edtMoney.setText(
+                            model.getMoney());
+
+                    edtNote.setText(
+                            model.getNote());
+
+                    txtDate.setText(
+                            model.getDate());
+
+                    selectedDate =
+                            model.getDate();
+
+                    selectedCategory =
+                            model.getCategory();
+
+                    isIncome =
+                            model.isIncome();
+
+                });
+    }
     private void selectCategory(
             LinearLayout selectedLayout) {
 
@@ -365,11 +417,22 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         // CREATE NEW NODE
 
-        DatabaseReference newRef = databaseReference
-                .child(uid)
-                .push();
+        DatabaseReference newRef;
 
-        String transactionId = newRef.getKey();
+        if(isEdit){
+
+            newRef = databaseReference
+                    .child(uid)
+                    .child(transactionId);
+
+        }else{
+
+            newRef = databaseReference
+                    .child(uid)
+                    .push();
+
+            transactionId = newRef.getKey();
+        }
 
         if (transactionId == null) {
 

@@ -8,6 +8,7 @@ public class TransactionModel {
     private String note;
     private String category;
     private String date;
+    private String fundId;
 
     private boolean isIncome;
 
@@ -75,14 +76,28 @@ public class TransactionModel {
     public void setDate(String date) {
         this.date = date;
     }
-
+    // FUND ID
+    public String getFundId() {
+        return fundId;
+    }
+    public void setFundId(String fundId) {
+        this.fundId = fundId;
+    }
     // INCOME
+
+    public boolean getIsIncome() {
+        return isIncome;
+    }
 
     public boolean isIncome() {
         return isIncome;
     }
 
     public void setIncome(boolean income) {
+        this.isIncome = income;
+    }
+
+    public void setIsIncome(boolean income) {
         this.isIncome = income;
     }
 

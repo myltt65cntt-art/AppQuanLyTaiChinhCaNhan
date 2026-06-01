@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpendWise">
         <activity
-            android:name=".TransactionAdapter"
+            android:name=".FundActivity"
             android:exported="false"
             android:theme="@style/Theme.SpendWise" />
         <activity

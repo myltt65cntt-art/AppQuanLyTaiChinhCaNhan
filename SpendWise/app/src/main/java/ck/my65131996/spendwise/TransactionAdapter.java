@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import android.graphics.Color;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 public class TransactionAdapter
         extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
@@ -47,6 +50,83 @@ public class TransactionAdapter
         TransactionModel model =
                 list.get(position);
 
+// CLICK = SỬA
+
+        holder.itemView.setOnClickListener(v -> {
+
+            android.content.Intent intent =
+                    new android.content.Intent(
+                            holder.itemView.getContext(),
+                            AddTransactionActivity.class);
+
+            intent.putExtra(
+                    "transactionId",
+                    model.getTransactionId());
+
+            holder.itemView.getContext()
+                    .startActivity(intent);
+        });
+
+// LONG CLICK = XÓA
+
+        holder.itemView.setOnLongClickListener(v -> {
+            if(model.getCategory().equals("🏦 Góp quỹ")
+                    || model.getCategory().equals("🏦 Rút quỹ")
+                    || model.getCategory().equals("🏦 Hoàn quỹ")){
+
+                android.widget.Toast.makeText(
+                        holder.itemView.getContext(),
+                        "Không thể xóa giao dịch quỹ",
+                        android.widget.Toast.LENGTH_SHORT
+                ).show();
+
+                return true;
+            }
+            new android.app.AlertDialog.Builder(
+                    holder.itemView.getContext())
+                    .setTitle("Xóa giao dịch")
+                    .setMessage("Bạn có muốn xóa giao dịch này không?")
+                    .setPositiveButton("Xóa",
+                            (dialog, which) -> {
+
+                                FirebaseDatabase
+                                        .getInstance(
+                                                "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/"
+                                        )
+                                        .getReference("transactions")
+                                        .child(
+                                                FirebaseAuth
+                                                        .getInstance()
+                                                        .getUid())
+                                        .child(
+                                                model.getTransactionId())
+                                        .removeValue()
+                                        .addOnSuccessListener(unused -> {
+
+                                            android.widget.Toast.makeText(
+                                                    holder.itemView.getContext(),
+                                                    "Xóa thành công",
+                                                    android.widget.Toast.LENGTH_SHORT
+                                            ).show();
+
+                                        })
+                                        .addOnFailureListener(e -> {
+
+                                            android.widget.Toast.makeText(
+                                                    holder.itemView.getContext(),
+                                                    e.getMessage(),
+                                                    android.widget.Toast.LENGTH_LONG
+                                            ).show();
+
+                                        });
+
+                            })
+
+                    .setNegativeButton("Hủy", null)
+                    .show();
+
+            return true;
+        });
         holder.txtCategory.setText(
                 model.getCategory());
 

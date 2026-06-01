@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ProfileActivity
         extends AppCompatActivity {
 
@@ -74,7 +74,42 @@ public class ProfileActivity
 
         imgCover =
                 findViewById(R.id.imgCover);
+        BottomNavigationView bottomNavigation =
+                findViewById(R.id.bottomNavigation);
 
+        bottomNavigation.setSelectedItemId(
+                R.id.navigation_profile);
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            if(item.getItemId() ==
+                    R.id.navigation_home){
+
+                startActivity(
+                        new Intent(
+                                ProfileActivity.this,
+                                HomeActivity.class));
+
+                finish();
+
+                return true;
+            }
+
+            if(item.getItemId() ==
+                    R.id.navigation_feature){
+
+                startActivity(
+                        new Intent(
+                                ProfileActivity.this,
+                                AddTransactionActivity.class));
+
+                finish();
+
+                return true;
+            }
+
+            return true;
+        });
         // USER DATA
 
         if (mAuth.getCurrentUser() != null) {

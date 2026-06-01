@@ -134,13 +134,12 @@ public class HomeActivity
 
                         new Intent(
                                 HomeActivity.this,
-                                AddTransactionActivity.class
+                                FundActivity.class
                         )
                 );
 
                 return true;
             }
-
             // PROFILE
 
             else if (item.getItemId()
@@ -211,38 +210,43 @@ public class HomeActivity
                                         continue;
                                     }
 
-                                    transactionList.add(model);
-
-                                    int money = 0;
-
-                                    try {
-
-                                        money = Integer.parseInt(
-                                                model.getMoney());
-
-                                    } catch (Exception e) {
-
-                                        e.printStackTrace();
-                                    }
-                                    // ĐỌC TRỰC TIẾP TỪ FIREBASE
                                     Boolean incomeValue =
                                             data.child("isIncome")
                                                     .getValue(Boolean.class);
+
                                     boolean isIncome =
                                             incomeValue != null
                                                     && incomeValue;
 
                                     model.setIncome(isIncome);
+
+                                    model.setTransactionId(
+                                            data.getKey());
+
+                                    transactionList.add(model);
+
+                                    int money = 0;
+
+                                    try {
+                                        money = Integer.parseInt(
+                                                model.getMoney());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
                                     if (isIncome) {
 
-                                        income += money;
-
                                         balance += money;
+
+                                        if(!model.getCategory().equals("🏦 Rút quỹ")
+                                                && !model.getCategory().equals("🏦 Hoàn quỹ")){
+
+                                            income += money;
+                                        }
 
                                     } else {
 
                                         expense += money;
-
                                         balance -= money;
                                     }
                                 }
