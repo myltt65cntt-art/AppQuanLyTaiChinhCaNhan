@@ -76,3 +76,21 @@ Việc sử dụng Firebase Authentication giúp tăng tính bảo mật, hỗ t
    <p align="center">
        <i>Giao diện nhập liệu</i>
   </p>
+  <p align="center">
+ <img width="250"alt="image" src="https://github.com/user-attachments/assets/587e9c98-3f6d-4e0d-a951-d4bd6562097f" />
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/6937f36c-4088-4710-b0f5-94629b20d3e1" />
+
+</p>
+ </p>
+   <p align="center">
+       <i>hũ tiết kiệm</i>
+  </p>
+   <p align="center">
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/f0f237b7-f412-43c0-8c28-6dacfb73397b" />
+
+
+</p>
+ </p>
+   <p align="center">
+       <i>Quên mật khẩu</i>
+  </p>
