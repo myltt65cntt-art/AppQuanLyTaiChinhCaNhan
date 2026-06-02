@@ -15,187 +15,84 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ProfileActivity
         extends AppCompatActivity {
-
     TextView txtName,
             txtEmail,
             txtAddress;
-
     Button btnEdit,
             btnLogout;
-
     ImageView imgAvatar,
             imgCover;
-
     FirebaseAuth mAuth;
-
     DatabaseReference userRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-        setContentView(
-                R.layout.activity_profile);
-
+        setContentView(R.layout.activity_profile);
         // FIREBASE
-
-        mAuth =
-                FirebaseAuth.getInstance();
-
-        userRef =
-                FirebaseDatabase
-
-                        .getInstance(
-                                "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/"
-                        )
-
-                        .getReference("users");
-
+        mAuth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance(
+                "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("users");
         // VIEW
-
-        txtName =
-                findViewById(R.id.txtName);
-
-        txtEmail =
-                findViewById(R.id.txtEmail);
-
-        txtAddress =
-                findViewById(R.id.txtAddress);
-
-        btnEdit =
-                findViewById(R.id.btnEdit);
-
-        btnLogout =
-                findViewById(R.id.btnLogout);
-
-        imgAvatar =
-                findViewById(R.id.imgAvatar);
-
-        imgCover =
-                findViewById(R.id.imgCover);
-        BottomNavigationView bottomNavigation =
-                findViewById(R.id.bottomNavigation);
-
-        bottomNavigation.setSelectedItemId(
-                R.id.navigation_profile);
-
-        bottomNavigation.setOnItemSelectedListener(item -> {
-
-            if(item.getItemId() ==
-                    R.id.navigation_home){
-
-                startActivity(
-                        new Intent(
-                                ProfileActivity.this,
-                                HomeActivity.class));
-
+        txtName = findViewById(R.id.txtName);
+        txtEmail = findViewById(R.id.txtEmail);
+        txtAddress = findViewById(R.id.txtAddress);
+        btnEdit = findViewById(R.id.btnEdit);
+        btnLogout = findViewById(R.id.btnLogout);
+        imgAvatar = findViewById(R.id.imgAvatar);
+        imgCover = findViewById(R.id.imgCover);
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation.setSelectedItemId(R.id.navigation_profile);
+        bottomNavigation.setOnItemSelectedListener(item -> {if(item.getItemId() == R.id.navigation_home){
+                startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
                 finish();
-
                 return true;
             }
-
-            if(item.getItemId() ==
-                    R.id.navigation_feature){
-
-                startActivity(
-                        new Intent(
-                                ProfileActivity.this,
-                                AddTransactionActivity.class));
-
+            if(item.getItemId() == R.id.navigation_feature){
+                startActivity(new Intent(ProfileActivity.this, FundActivity.class));
                 finish();
-
                 return true;
             }
-
             return true;
         });
         // USER DATA
-
         if (mAuth.getCurrentUser() != null) {
-
-            String uid =
-                    mAuth.getCurrentUser()
-                            .getUid();
-
+            String uid = mAuth.getCurrentUser().getUid();
             // EMAIL AUTH
-
-            txtEmail.setText(
-
-                    mAuth.getCurrentUser()
-                            .getEmail()
+            txtEmail.setText(mAuth.getCurrentUser().getEmail()
             );
-
             // LOAD DATABASE
-
             userRef.child(uid)
-
                     .get()
-
                     .addOnSuccessListener(snapshot -> {
-
                         if (snapshot.exists()) {
-
-                            String name =
-                                    snapshot.child("name")
-                                            .getValue(String.class);
-
-                            String address =
-                                    snapshot.child("address")
-                                            .getValue(String.class);
-
-                            String avatar =
-                                    snapshot.child("avatar")
-                                            .getValue(String.class);
-
-                            String cover =
-                                    snapshot.child("cover")
-                                            .getValue(String.class);
-
+                            String name = snapshot.child("name").getValue(String.class);
+                            String address = snapshot.child("address").getValue(String.class);
+                            String avatar = snapshot.child("avatar").getValue(String.class);
+                            String cover = snapshot.child("cover").getValue(String.class);
                             // NAME
-
                             if (name != null) {
-
                                 txtName.setText(name);
-
                             } else {
-
-                                txtName.setText(
-                                        "SpendWise User");
+                                txtName.setText("SpendWise User");
                             }
-
                             // ADDRESS
-
                             if (address != null) {
-
-                                txtAddress.setText(
-                                        "📍 " + address);
-
+                                txtAddress.setText("📍 " + address);
                             } else {
-
-                                txtAddress.setText(
-                                        "📍 Chưa cập nhật");
+                                txtAddress.setText("📍 Chưa cập nhật");
                             }
-
                             // AVATAR
-
                             if (avatar != null) {
-
                                 Glide.with(this)
-
                                         .load(avatar)
-
                                         .into(imgAvatar);
                             }
 
                             // COVER
-
                             if (cover != null) {
-
                                 Glide.with(this)
-
                                         .load(cover)
-
                                         .into(imgCover);
                             }
                         }
@@ -203,99 +100,48 @@ public class ProfileActivity
         }
 
         // EDIT PROFILE
-
         btnEdit.setOnClickListener(v -> {
-
             startActivity(
-
-                    new Intent(
-                            this,
-                            EditProfileActivity.class
-                    )
+                    new Intent(this, EditProfileActivity.class)
             );
         });
-
         // LOGOUT
-
         btnLogout.setOnClickListener(v -> {
-
             mAuth.signOut();
-
             startActivity(
-
-                    new Intent(
-                            this,
-                            MainActivity.class
-                    )
+                    new Intent(this, MainActivity.class)
             );
-
             finish();
         });
     }
-
     // LOAD LẠI KHI QUAY VỀ
-
     @Override
     protected void onResume() {
-
         super.onResume();
-
         if (mAuth.getCurrentUser() != null) {
-
-            String uid =
-                    mAuth.getCurrentUser()
-                            .getUid();
-
+            String uid = mAuth.getCurrentUser().getUid();
             userRef.child(uid)
-
                     .get()
-
                     .addOnSuccessListener(snapshot -> {
-
                         if (snapshot.exists()) {
-
-                            String name =
-                                    snapshot.child("name")
-                                            .getValue(String.class);
-
-                            String address =
-                                    snapshot.child("address")
-                                            .getValue(String.class);
-
-                            String avatar =
-                                    snapshot.child("avatar")
-                                            .getValue(String.class);
-
-                            String cover =
-                                    snapshot.child("cover")
-                                            .getValue(String.class);
-
+                            String name = snapshot.child("name").getValue(String.class);
+                            String address = snapshot.child("address").getValue(String.class);
+                            String avatar = snapshot.child("avatar").getValue(String.class);
+                            String cover = snapshot.child("cover").getValue(String.class);
                             if (name != null) {
-
                                 txtName.setText(name);
                             }
-
                             if (address != null) {
-
-                                txtAddress.setText(
-                                        "📍 " + address);
+                                txtAddress.setText("📍 " + address);
                             }
-
                             if (avatar != null) {
-
                                 Glide.with(this)
-
                                         .load(avatar)
-
                                         .into(imgAvatar);
                             }
-
                             if (cover != null) {
-
                                 Glide.with(this)
-
                                         .load(cover)
-
                                         .into(imgCover);
                             }
                         }

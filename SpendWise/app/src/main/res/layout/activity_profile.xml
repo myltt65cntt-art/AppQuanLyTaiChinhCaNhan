@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F4F4F4">
+    android:background="#F7FFF8">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -149,12 +149,22 @@
         </LinearLayout>
 
     </ScrollView>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
+
         android:id="@+id/bottomNavigation"
+
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+
         android:background="#FFFFFF"
-        app:menu="@menu/menu" />
+
+        app:itemIconTint="#4CAF50"
+
+        app:itemTextColor="#4CAF50"
+
+        app:menu="@menu/menu"/>
 
 </LinearLayout>

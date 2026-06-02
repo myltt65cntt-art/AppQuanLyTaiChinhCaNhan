@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import ck.my65131996.spendwise.databinding.FragmentFirst3Binding;
 
-import ck.my65131996.spendwise.databinding.FragmentFirst2Binding;
+public class First3Fragment extends Fragment {
 
-public class First2Fragment extends Fragment {
-
-    private FragmentFirst2Binding binding;
+private FragmentFirst3Binding binding;
 
     @Override
     public View onCreateView(
@@ -21,8 +20,8 @@ public class First2Fragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentFirst2Binding.inflate(inflater, container, false);
-        return binding.getRoot();
+      binding = FragmentFirst3Binding.inflate(inflater, container, false);
+      return binding.getRoot();
 
     }
 
@@ -30,12 +29,12 @@ public class First2Fragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonFirst.setOnClickListener(v ->
-                NavHostFragment.findNavController(First2Fragment.this)
-                        .navigate(R.id.action_First2Fragment_to_Second2Fragment)
+                NavHostFragment.findNavController(First3Fragment.this)
+                        .navigate(R.id.action_First3Fragment_to_Second3Fragment)
         );
     }
 
-    @Override
+@Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;

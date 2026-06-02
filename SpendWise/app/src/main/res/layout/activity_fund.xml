@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F4F4"
+    android:background="#F7FFF8"
     android:orientation="vertical">
 
     <!-- HEADER -->
@@ -87,7 +87,10 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
+        app:itemIconTint="#4CAF50"
+        app:itemTextColor="#4CAF50"
         app:menu="@menu/menu"/>
 
 

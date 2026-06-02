@@ -39,157 +39,65 @@ public class HomeActivity
     int income = 0;
 
     FirebaseAuth mAuth;
-
     DatabaseReference databaseReference;
-
     BottomNavigationView bottomNavigation;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home);
-
         // VIEW
-
-        btnAddTransaction =
-                findViewById(R.id.btnAddTransaction);
-
-        recyclerTransaction =
-                findViewById(R.id.recyclerTransaction);
-
-        transactionList =
-                new ArrayList<>();
-
-        adapter =
-                new TransactionAdapter(
-                        this,
-                        transactionList);
-
-        recyclerTransaction.setLayoutManager(
-                new LinearLayoutManager(this));
-
+        btnAddTransaction = findViewById(R.id.btnAddTransaction);
+        recyclerTransaction = findViewById(R.id.recyclerTransaction);
+        transactionList = new ArrayList<>();
+        adapter = new TransactionAdapter(this, transactionList);
+        recyclerTransaction.setLayoutManager(new LinearLayoutManager(this));
         recyclerTransaction.setAdapter(adapter);
-
-        txtBalance =
-                findViewById(R.id.txtBalance);
-
-        txtExpense =
-                findViewById(R.id.txtExpense);
-
-        txtIncome =
-                findViewById(R.id.txtIncome);
-
-        bottomNavigation =
-                findViewById(R.id.bottomNavigation);
-
+        txtBalance = findViewById(R.id.txtBalance);
+        txtExpense = findViewById(R.id.txtExpense);
+        txtIncome = findViewById(R.id.txtIncome);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
         // FIREBASE
-
-        mAuth =
-                FirebaseAuth.getInstance();
-
-        FirebaseDatabase database =
-                FirebaseDatabase.getInstance(
-                        "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/"
-                );
-
-        databaseReference =
-                database.getReference("transactions");
-
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance(
+                "https://spendwise-8253b-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        databaseReference = database.getReference("transactions");
         // BUTTON ADD
-
         btnAddTransaction.setOnClickListener(v -> {
-
-            Intent intent =
-                    new Intent(
-                            HomeActivity.this,
-                            AddTransactionActivity.class
-                    );
-
+            Intent intent = new Intent(HomeActivity.this, AddTransactionActivity.class);
             startActivity(intent);
         });
-
         // MENU DƯỚI
-
-        bottomNavigation.setSelectedItemId(
-                R.id.navigation_home);
-
+        bottomNavigation.setSelectedItemId(R.id.navigation_home);
         bottomNavigation.setOnItemSelectedListener(item -> {
-
             // HOME
-
-            if (item.getItemId()
-                    == R.id.navigation_home) {
-
+            if (item.getItemId() == R.id.navigation_home) {
                 return true;
             }
-
             // CHỨC NĂNG
-
-            else if (item.getItemId()
-                    == R.id.navigation_feature) {
-
-                startActivity(
-
-                        new Intent(
-                                HomeActivity.this,
-                                FundActivity.class
+            else if (item.getItemId() == R.id.navigation_feature) {
+                startActivity(new Intent(HomeActivity.this, FundActivity.class
                         )
                 );
-
                 return true;
             }
             // PROFILE
-
-            else if (item.getItemId()
-                    == R.id.navigation_profile) {
-
-                startActivity(
-
-                        new Intent(
-                                HomeActivity.this,
-                                ProfileActivity.class
-                        )
-                );
-
+            else if (item.getItemId() == R.id.navigation_profile) {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
                 return true;
             }
-
             return false;
         });
-
         // LOAD DATA
-
         loadData();
     }
-
     private void loadData() {
-
-        FirebaseUser user =
-                mAuth.getCurrentUser();
-
+        FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
-
-            Toast.makeText(
-                    this,
-                    "Chưa đăng nhập",
-                    Toast.LENGTH_LONG
-            ).show();
-
+            Toast.makeText(this, "Chưa đăng nhập", Toast.LENGTH_LONG).show();
             return;
         }
-
-        String uid =
-                user.getUid();
-
-        databaseReference
-
-                .child(uid)
-
-                .addValueEventListener(
-                        new ValueEventListener() {
-
+        String uid = user.getUid();
+        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(
                                     @NonNull DataSnapshot snapshot) {
@@ -197,86 +105,48 @@ public class HomeActivity
                                 balance = 0;
                                 income = 0;
                                 expense = 0;
-
                                 transactionList.clear();
-
                                 for (DataSnapshot data : snapshot.getChildren()) {
-
-                                    TransactionModel model =
-                                            data.getValue(
-                                                    TransactionModel.class);
-
+                                    TransactionModel model = data.getValue(TransactionModel.class);
                                     if (model == null) {
                                         continue;
                                     }
-
-                                    Boolean incomeValue =
-                                            data.child("isIncome")
-                                                    .getValue(Boolean.class);
-
-                                    boolean isIncome =
-                                            incomeValue != null
-                                                    && incomeValue;
-
+                                    Boolean incomeValue = data.child("isIncome").getValue(Boolean.class);
+                                    boolean isIncome = incomeValue != null && incomeValue;
                                     model.setIncome(isIncome);
-
-                                    model.setTransactionId(
-                                            data.getKey());
-
+                                    model.setTransactionId(data.getKey());
                                     transactionList.add(model);
-
                                     int money = 0;
-
                                     try {
-                                        money = Integer.parseInt(
-                                                model.getMoney());
+                                        money = Integer.parseInt(model.getMoney());
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-
                                     if (isIncome) {
-
                                         balance += money;
-
-                                        if(!model.getCategory().equals("🏦 Rút quỹ")
-                                                && !model.getCategory().equals("🏦 Hoàn quỹ")){
-
+                                        if(!model.getCategory().equals("🏦 Rút quỹ") && !model.getCategory().equals("🏦 Hoàn quỹ")){
                                             income += money;
                                         }
-
                                     } else {
-
                                         expense += money;
                                         balance -= money;
                                     }
                                 }
-
                                 adapter.notifyDataSetChanged();
-
                                 updateUI();
                             }
-
                             @Override
                             public void onCancelled(
                                     @NonNull DatabaseError error) {
-
-                                Toast.makeText(
-                                        HomeActivity.this,
-                                        error.getMessage(),
-                                        Toast.LENGTH_LONG
-                                ).show();
+                                Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
     }
-
     private void updateUI() {
-
         txtBalance.setText(
                 String.format("%,d đ", balance));
-
         txtIncome.setText(
                 "+" + String.format("%,d", income) + " đ");
-
         txtExpense.setText(
                 "-" + String.format("%,d", expense) + " đ");
     }

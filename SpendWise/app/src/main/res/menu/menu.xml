@@ -10,11 +10,11 @@
     <item
         android:id="@+id/navigation_feature"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Chức năng"/>
+        android:title="Hũ quỹ"/>
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="Profile"/>
+        android:title="Hồ sơ"/>
 
 </menu>
