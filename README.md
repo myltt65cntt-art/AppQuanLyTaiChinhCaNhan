@@ -119,6 +119,20 @@ Sau khi lưu thành công, giao dịch sẽ được hiển thị ngay trên mà
    <p align="center">
        <i>hũ tiết kiệm</i>
   </p>
+  Chức năng hũ tiết kiệm giúp người dùng quản lý các mục tiêu tiết kiệm cá nhân như du lịch, mua sắm hoặc các khoản chi tiêu trong tương lai.
+
+Người dùng có thể tạo nhiều hũ tiết kiệm khác nhau bằng cách nhập tên hũ và số tiền mục tiêu. Mỗi hũ sẽ hiển thị số tiền hiện có, số tiền mục tiêu và tiến độ hoàn thành thông qua thanh ProgressBar.
+
+Ứng dụng hỗ trợ các chức năng:
+
+- Tạo hũ tiết kiệm mới
+- Góp tiền vào hũ
+- Rút tiền từ hũ
+- Xóa hũ tiết kiệm
+
+Khi người dùng góp tiền hoặc rút tiền, hệ thống sẽ tự động cập nhật số dư của hũ và đồng thời tạo giao dịch tương ứng trong hệ thống thu chi để đảm bảo số dư tài chính luôn chính xác.
+
+Toàn bộ dữ liệu hũ tiết kiệm được lưu trữ trên Firebase Realtime Database và tự động đồng bộ theo thời gian thực với tài khoản người dùng.
    <p align="center">
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/f0f237b7-f412-43c0-8c28-6dacfb73397b" />
 
