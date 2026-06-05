@@ -94,3 +94,5 @@ Việc sử dụng Firebase Authentication giúp tăng tính bảo mật, hỗ t
    <p align="center">
        <i>Quên mật khẩu</i>
   </p>
+  Link Google Drive:
+  https://drive.google.com/file/d/1n2ZgG_DjlPVdlFHwVbzmXd-0v1cqnh_K/view?usp=drive_link
