@@ -70,25 +70,7 @@ Ngoài ra, người dùng có thể nhấn vào giao dịch để chỉnh sửa 
    <p align="center">
       <i>Giao diện nhập chi tiêu ứng dụng SpendWise</i>
   </p>
-  Giao diện nhập giao dịch cho phép người dùng thêm mới các khoản thu nhập hoặc chi tiêu vào hệ thống.
-
-Người dùng có thể nhập các thông tin gồm:
-
-- Số tiền giao dịch
-- Loại giao dịch (Thu nhập hoặc Chi tiêu)
-- Danh mục
-- Ngày giao dịch
-- Ghi chú
-
-Sau khi nhấn nút **Lưu**, hệ thống kiểm tra tính hợp lệ của dữ liệu đầu vào. Nếu hợp lệ, ứng dụng sẽ tạo một đối tượng `TransactionModel` chứa toàn bộ thông tin giao dịch.
-
-Dữ liệu sau đó được lưu lên Firebase Realtime Database theo cấu trúc:
-
-`transactions → UID → TransactionID`
-
-Trong đó `UID` là mã người dùng hiện tại được lấy từ Firebase Authentication và `TransactionID` được tạo tự động bằng phương thức `push()` của Firebase.
-
-Sau khi lưu thành công, giao dịch sẽ được hiển thị ngay trên màn hình Trang chủ nhờ cơ chế đồng bộ dữ liệu thời gian thực của Firebase Realtime Database.
+ 
     <p align="center">
     <img width="250"  alt="image" src="https://github.com/user-attachments/assets/d38db452-bd95-4889-a416-7bcdb9b0ad1b" />
     <img width="250" alt="image" src="https://github.com/user-attachments/assets/0fed6c91-207c-41ff-b0ea-82b98f886f7d" />
@@ -115,6 +97,25 @@ Sau khi lưu thành công, giao dịch sẽ được hiển thị ngay trên mà
    <p align="center">
        <i>Giao diện nhập liệu</i>
   </p>
+   Giao diện nhập giao dịch cho phép người dùng thêm mới các khoản thu nhập hoặc chi tiêu vào hệ thống.
+
+Người dùng có thể nhập các thông tin gồm:
+
+- Số tiền giao dịch
+- Loại giao dịch (Thu nhập hoặc Chi tiêu)
+- Danh mục
+- Ngày giao dịch
+- Ghi chú
+
+Sau khi nhấn nút **Lưu**, hệ thống kiểm tra tính hợp lệ của dữ liệu đầu vào. Nếu hợp lệ, ứng dụng sẽ tạo một đối tượng `TransactionModel` chứa toàn bộ thông tin giao dịch.
+
+Dữ liệu sau đó được lưu lên Firebase Realtime Database theo cấu trúc:
+
+`transactions → UID → TransactionID`
+
+Trong đó `UID` là mã người dùng hiện tại được lấy từ Firebase Authentication và `TransactionID` được tạo tự động bằng phương thức `push()` của Firebase.
+
+Sau khi lưu thành công, giao dịch sẽ được hiển thị ngay trên màn hình Trang chủ nhờ cơ chế đồng bộ dữ liệu thời gian thực của Firebase Realtime Database.
   <p align="center">
  <img width="250"alt="image" src="https://github.com/user-attachments/assets/587e9c98-3f6d-4e0d-a951-d4bd6562097f" />
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/6937f36c-4088-4710-b0f5-94629b20d3e1" />
