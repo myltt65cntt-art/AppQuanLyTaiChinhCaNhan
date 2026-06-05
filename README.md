@@ -64,7 +64,7 @@ Hệ thống tự động duyệt danh sách giao dịch để tính toán tổn
 
 Ngoài ra, người dùng có thể nhấn vào giao dịch để chỉnh sửa hoặc nhấn giữ để xóa giao dịch. Mọi thay đổi đều được đồng bộ thời gian thực với Firebase Realtime Database.
   
- 
+ <p
     <p align="center">
     <img width="250"  alt="image" src="https://github.com/user-attachments/assets/d38db452-bd95-4889-a416-7bcdb9b0ad1b" />
     <img width="250" alt="image" src="https://github.com/user-attachments/assets/0fed6c91-207c-41ff-b0ea-82b98f886f7d" />
