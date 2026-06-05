@@ -36,6 +36,7 @@ Việc sử dụng Firebase Authentication giúp tăng tính bảo mật, hỗ t
   <p align="center">
       <i>Giao diện đăng kí ứng dụng SpendWise</i>
   </p>
+  Giao diện đăng ký cho phép người dùng tạo tài khoản mới để sử dụng ứng dụng SpendWise. Người dùng nhập họ tên, email, mật khẩu và xác nhận mật khẩu. Khi nhấn nút Đăng ký, hệ thống kiểm tra dữ liệu đầu vào và sử dụng Firebase Authentication để tạo tài khoản. Nếu đăng ký thành công, người dùng sẽ được chuyển đến màn hình thông báo đăng ký thành công.
   <p align="center">
 <img width="250" alt="image" src="https://github.com/user-attachments/assets/426dd199-f00d-4664-8928-2369a37e2e32" />
 
