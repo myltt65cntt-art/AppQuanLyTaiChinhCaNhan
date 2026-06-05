@@ -63,13 +63,7 @@ Hệ thống tự động duyệt danh sách giao dịch để tính toán tổn
 `Số dư = Tổng thu nhập - Tổng chi tiêu`
 
 Ngoài ra, người dùng có thể nhấn vào giao dịch để chỉnh sửa hoặc nhấn giữ để xóa giao dịch. Mọi thay đổi đều được đồng bộ thời gian thực với Firebase Realtime Database.
-  <p align="center">
-    <img width="250"  alt="image" src="https://github.com/user-attachments/assets/a6043b4d-9667-4c19-8ae2-ef3a826c79d7" />
-
-  </p>
-   <p align="center">
-      <i>Giao diện nhập chi tiêu ứng dụng SpendWise</i>
-  </p>
+  
  
     <p align="center">
     <img width="250"  alt="image" src="https://github.com/user-attachments/assets/d38db452-bd95-4889-a416-7bcdb9b0ad1b" />
