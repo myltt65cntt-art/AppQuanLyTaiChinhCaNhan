@@ -142,5 +142,12 @@ Toàn bộ dữ liệu hũ tiết kiệm được lưu trữ trên Firebase Real
    <p align="center">
        <i>Quên mật khẩu</i>
   </p>
+  Chức năng quên mật khẩu hỗ trợ người dùng khôi phục tài khoản khi không nhớ mật khẩu đăng nhập.
+
+Người dùng chỉ cần nhập địa chỉ email đã đăng ký tài khoản và nhấn nút **Gửi**. Hệ thống sẽ sử dụng Firebase Authentication để gửi liên kết đặt lại mật khẩu đến email tương ứng thông qua phương thức `sendPasswordResetEmail()`.
+
+Sau khi nhận được email, người dùng truy cập liên kết được cung cấp để thiết lập mật khẩu mới. Sau khi hoàn tất, người dùng có thể sử dụng mật khẩu mới để đăng nhập lại vào ứng dụng.
+
+Chức năng này giúp tăng tính bảo mật, hỗ trợ khôi phục tài khoản nhanh chóng và nâng cao trải nghiệm người dùng.
   Link Google Drive:
   https://drive.google.com/file/d/1n2ZgG_DjlPVdlFHwVbzmXd-0v1cqnh_K/view?usp=drive_link
