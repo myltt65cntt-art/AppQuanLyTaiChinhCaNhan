@@ -45,6 +45,28 @@ Việc sử dụng Firebase Authentication giúp tăng tính bảo mật, hỗ t
       <i>Giao diện chính ứng dụng SpendWise</i>
   </p>
   <p align="center">
+    <i>Giao diện chính ứng dụng SpendWise</i>
+</p>
+
+Giao diện chính là màn hình trung tâm của ứng dụng, cho phép người dùng theo dõi tình hình tài chính cá nhân một cách trực quan.
+
+Màn hình hiển thị các thông tin quan trọng gồm:
+
+- Tổng thu nhập
+- Tổng chi tiêu
+- Số dư hiện tại
+- Danh sách các giao dịch thu chi
+
+Dữ liệu được đọc từ Firebase Realtime Database thông qua `ValueEventListener`, giúp ứng dụng tự động cập nhật khi có thay đổi dữ liệu.
+
+Danh sách giao dịch được hiển thị bằng `RecyclerView` kết hợp với `TransactionAdapter`, hỗ trợ hiển thị số lượng lớn giao dịch một cách tối ưu.
+
+Hệ thống tự động duyệt danh sách giao dịch để tính toán tổng thu nhập, tổng chi tiêu và số dư hiện tại theo công thức:
+
+`Số dư = Tổng thu nhập - Tổng chi tiêu`
+
+Ngoài ra, người dùng có thể nhấn vào giao dịch để chỉnh sửa hoặc nhấn giữ để xóa giao dịch. Mọi thay đổi đều được đồng bộ thời gian thực với Firebase Realtime Database.
+  <p align="center">
     <img width="250"  alt="image" src="https://github.com/user-attachments/assets/a6043b4d-9667-4c19-8ae2-ef3a826c79d7" />
 
   </p>
