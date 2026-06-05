@@ -150,4 +150,4 @@ Sau khi nhận được email, người dùng truy cập liên kết được cu
 
 Chức năng này giúp tăng tính bảo mật, hỗ trợ khôi phục tài khoản nhanh chóng và nâng cao trải nghiệm người dùng.
   Link Google Drive:
-  https://drive.google.com/file/d/1n2ZgG_DjlPVdlFHwVbzmXd-0v1cqnh_K/view?usp=drive_link
+  https://drive.google.com/file/d/1eQQ7v8TM9rptxo3cRCTsyjpXrwGSsxvH/view?usp=sharing
