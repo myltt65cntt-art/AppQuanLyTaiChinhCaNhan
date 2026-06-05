@@ -1,3 +1,6 @@
+Link Google Drive:
+  https://drive.google.com/file/d/1eQQ7v8TM9rptxo3cRCTsyjpXrwGSsxvH/view?usp=sharing
+
 # SpendWise
 
 Ứng dụng quản lý tài chính cá nhân trên Android giúp người dùng quản lý thu nhập, chi tiêu và theo dõi tình hình tài chính một cách hiệu quả.
@@ -149,5 +152,4 @@ Người dùng chỉ cần nhập địa chỉ email đã đăng ký tài khoả
 Sau khi nhận được email, người dùng truy cập liên kết được cung cấp để thiết lập mật khẩu mới. Sau khi hoàn tất, người dùng có thể sử dụng mật khẩu mới để đăng nhập lại vào ứng dụng.
 
 Chức năng này giúp tăng tính bảo mật, hỗ trợ khôi phục tài khoản nhanh chóng và nâng cao trải nghiệm người dùng.
-  Link Google Drive:
-  https://drive.google.com/file/d/1eQQ7v8TM9rptxo3cRCTsyjpXrwGSsxvH/view?usp=sharing
+  
